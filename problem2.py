@@ -23,6 +23,7 @@ def create_student_record(name, age, major, gpa):
     """
     # TODO: Implement this function
     # Return a dictionary with the provided information
+    return {'name': name,'age': age,'major': major,'gpa': gpa}
     pass
 
 
@@ -47,6 +48,7 @@ def get_value_safely(dictionary, key, default=None):
     """
     # TODO: Implement this function
     # Hint: Use the .get() method or check if key in dictionary
+    return dictionary.get(key, default)
     pass
 
 
@@ -67,9 +69,12 @@ def merge_dictionaries(dict1, dict2):
     """
     # TODO: Implement this function
     # Create a new dictionary with items from both
+    merged = dict1.copy()
+    merged.update(dict2)
+    return merged
     pass
 
-
+import string
 def count_word_frequency(text):
     """
     Count the frequency of each word in a text string.
@@ -88,9 +93,21 @@ def count_word_frequency(text):
     # TODO: Implement this function
     # Steps:
     # 1. Convert text to lowercase
+    text = text.lower()
     # 2. Remove punctuation (you can use .replace() or import string)
+    for char in string.punctuation:
+        text = text.replace(char, '')
     # 3. Split into words
+    words = text.split()
     # 4. Count each word's frequency
+    frequency = {}
+    for word in words:
+        if word in frequency:
+            frequency[word] += 1
+        else:
+            frequency[word] = 1
+    return frequency
+    
     pass
 
 
@@ -111,6 +128,7 @@ def invert_dictionary(dictionary):
     """
     # TODO: Implement this function
     # Create a new dictionary with values as keys and keys as values
+    return {value: key for key, value in dictionary.items()}
     pass
 
 
@@ -131,6 +149,7 @@ def filter_dictionary(dictionary, keys_to_keep):
     """
     # TODO: Implement this function
     # Loop through keys_to_keep and add them to result if they exist
+    return {key: dictionary[key] for key in keys_to_keep if key in dictionary}
     pass
 
 
@@ -153,6 +172,11 @@ def group_by_first_letter(words):
     #   - Get first letter
     #   - Add word to the list for that letter
     # Hint: Use .setdefault() or check if key exists
+    grouped = {}
+    for word in words:
+        first_letter = word[0].lower()
+        grouped.setdefault(first_letter, []).append(word)
+    return grouped
     pass
 
 
@@ -178,6 +202,10 @@ def calculate_grades_average(students):
     # TODO: Implement this function
     # For each student, calculate average of their grades
     # Hint: sum(grades) / len(grades)
+    averages = {}
+    for name, grades in students.items():
+        averages[name] = round(sum(grades) / len(grades), 2)
+    return averages
     pass
 
 
@@ -203,6 +231,13 @@ def nested_dict_access(data, keys):
     # TODO: Implement this function
     # Start with data, then traverse using each key
     # Return None if any key is missing
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            return None
+    return current
     pass
 
 
